@@ -1,0 +1,11 @@
+version: '2'
+services:
+  dict-loader:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    container_name: 'dict-loader'
+    command: python main.py
+
