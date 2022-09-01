@@ -11,7 +11,7 @@ class Subdivision:
     def __init__(self):
 
         self.tablename = 'subdivision'
-        self.filepath_src = 'src/Подразделения v03.xlsx'
+        self.filepath_src = 'src/Подразделения v04.xlsx'
         self.sheet_name = 'Подразделения'
         self.filepath_out = 'out/subdivision.sql'
         self.filepath_out_closure = 'out/subdivision_closure.sql'

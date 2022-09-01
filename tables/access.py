@@ -11,7 +11,7 @@ class Access:
     def __init__(self):
 
         self.tablename = 'access'
-        self.filepath_src = 'src/Подразделения v03.xlsx'
+        self.filepath_src = 'src/Подразделения v04.xlsx'
         self.sheet_name = 'Роли'
         self.filepath_out = 'out/access.sql'
 
