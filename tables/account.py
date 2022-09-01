@@ -126,3 +126,5 @@ class Account:
 
         self.log.info('Done')
         self.log.info('.')
+
+        return fio_id_dict
