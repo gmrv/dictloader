@@ -11,7 +11,7 @@ class Account:
     def __init__(self):
 
         self.tablename = 'account'
-        self.filepath_src = 'src/Подразделения v04.xlsx'
+        self.filepath_src = 'src/Подразделения v05.xlsx'
         self.sheet_name = 'Сотрудники'
         self.filepath_out = 'out/account.sql'
 
@@ -44,8 +44,11 @@ class Account:
 
         for index, row in self.df.iterrows():
 
-            active = row.Active
-            NIKA_Active = row.NIKA_Active
+            # is_it_loadable
+            if int(row.is_it_loadable) == 0:
+                self.log.error(
+                    f'Index: {index}. Message: Skip this record by flag. Record: {row.fio}, {row.login}, {row.email}.')
+                continue
 
             # subdivision_id
             nsubdivision = self.normalise_str(row.subdivision).split('\\')[-1]
@@ -106,7 +109,7 @@ class Account:
             phone = self.normalise_str(row.phone)
 
             # is_actual
-            if int(active) == 1:
+            if int(row.Active) == 1:
                 is_actual = 'true'
             else:
                 is_actual = 'false'

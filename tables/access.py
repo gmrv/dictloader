@@ -11,7 +11,7 @@ class Access:
     def __init__(self):
 
         self.tablename = 'access'
-        self.filepath_src = 'src/Подразделения v04.xlsx'
+        self.filepath_src = 'src/Подразделения v05.xlsx'
         self.sheet_name = 'Роли'
         self.filepath_out = 'out/access.sql'
 
@@ -42,6 +42,8 @@ class Access:
         sql = '''INSERT INTO access.access (account_id, subdivision_id, role_id) VALUES'''
 
         self.log.info(f'File: {self.filepath_src}, Sheet: {self.sheet_name}')
+
+        unique_keys = set()
 
         for index, row in self.df.iterrows():
 
@@ -74,8 +76,15 @@ class Access:
                 continue
                 self.log.error(f'Index: {index}. Message: Role not found: {role}')
 
-            line = f"({account_id}, {subdivision_id}, {role_id}),"
-            sql = '\n'.join((sql, line))
+            key = f'{str(account_id)}:{str(subdivision_id)}:{str(role_id)}'
+
+            if not (key in unique_keys):
+                unique_keys.add(key)
+                line = f"({account_id}, {subdivision_id}, {role_id}),"
+                sql = '\n'.join((sql, line))
+            else:
+                self.log.error(f'Index: {index}. Message: Not unique combination fio, subdivision and role : {fio} :: {subdivision} :: {role}')
+
         sql = sql[:-1]
 
         f = open(self.filepath_out, 'w')
